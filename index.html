@@ -2168,9 +2168,89 @@ Expecting `+Ze.join(", ")+", got '"+(this.terminals_[Ne]||Ne)+"'":Dt="Parse erro
         border-radius: 6px; padding: 0.3rem 0.7rem; cursor: pointer; font-size: 0.82rem;
       }
       .close-btn:hover { color: var(--text); }
+
+      /* ---- Site chrome (Institute / Labs) ----
+         Both header/footer pairs ship in the file, hidden by default.
+         A small script at the end of the body unhides the pair matching
+         location.hostname; on any other host the page shows no chrome. */
+      .site-chrome[hidden] { display: none !important; }
+      .site-bar {
+        background: #16161a; border-bottom: 1px solid #26262e; color: #e8e6df;
+      }
+      .site-bar-inner, .site-foot-inner {
+        max-width: 1460px; margin: 0 auto; padding: 0.7rem 1.25rem;
+        display: flex; align-items: center; flex-wrap: wrap;
+      }
+      .site-bar-inner { justify-content: space-between; gap: 0.6rem 1.5rem; }
+      .wordmark {
+        display: inline-flex; align-items: center; gap: 0.6rem;
+        color: #e8e6df; text-decoration: none; min-height: 2.25rem;
+      }
+      .wordmark img { width: 32px; height: 32px; display: block; }
+      .wordmark:hover { color: var(--blue); }
+      .wordmark-text { display: flex; flex-direction: column; line-height: 1.15; }
+      .wordmark-name { font-weight: 700; letter-spacing: 0.06em; font-size: 0.95rem; }
+      .wordmark-sub { font-size: 0.68rem; letter-spacing: 0.28em; color: #9a97a3; font-weight: 600; }
+      .wordmark-inline { font-size: 1rem; letter-spacing: 0.01em; }
+      .site-nav { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; }
+      .site-nav a {
+        color: #9a97a3; text-decoration: none; font-size: 0.9rem;
+        padding: 0.3rem 0; display: inline-flex; align-items: center; min-height: 2.25rem;
+      }
+      .site-nav a:hover { color: var(--blue); }
+      .site-nav a[aria-current="page"] { color: #e8e6df; }
+      .site-foot {
+        background: #16161a; border-top: 1px solid #26262e; color: #9a97a3;
+        font-size: 0.85rem;
+      }
+      .site-foot-inner { gap: 0.35rem 1.5rem; padding-top: 0.85rem; padding-bottom: 0.85rem; }
+      .site-foot a { color: #9a97a3; text-decoration: underline; text-underline-offset: 3px; }
+      .site-foot a:hover { color: var(--blue); }
+      .site-foot .foot-links { display: inline-flex; flex-wrap: wrap; gap: 0.3rem 1rem; }
+      .site-foot .foot-links a { text-decoration: none; padding: 0.2rem 0; }
+      @media (min-width: 961px) {
+        .site-foot .foot-right { margin-left: auto; }
+      }
     </style>
   </head>
   <body>
+    <header class="site-bar site-chrome" data-chrome="institute" hidden>
+      <div class="site-bar-inner">
+        <a class="wordmark" href="/" aria-label="Confused Gorilla Institute home">
+          <img data-src="/assets/gorilla-mark.png" alt="" width="32" height="32" />
+          <span class="wordmark-text">
+            <span class="wordmark-name">CONFUSED GORILLA</span>
+            <span class="wordmark-sub">INSTITUTE</span>
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="Confused Gorilla Institute">
+          <a href="/#research">Research</a>
+          <a href="/#work">Work</a>
+          <a href="/conversations/">Conversations</a>
+          <a href="/essays/">Essays</a>
+          <a href="/organization/" aria-current="page">Organization</a>
+          <a href="/organization/orgs/">Published OrgDefs</a>
+          <a href="https://labs.confusedgorilla.com/">Labs</a>
+        </nav>
+      </div>
+    </header>
+
+    <header class="site-bar site-chrome" data-chrome="labs" hidden>
+      <div class="site-bar-inner">
+        <a class="wordmark" href="/" aria-label="Confused Gorilla Labs home">
+          <img data-src="/assets/gorilla-mark.png" alt="" width="32" height="32" />
+          <span class="wordmark-inline">Confused Gorilla <strong>Labs</strong></span>
+        </a>
+        <nav class="site-nav" aria-label="Confused Gorilla Labs">
+          <a href="https://confusedgorilla.com/">Confused Gorilla Institute &#8599;</a>
+          <a href="/#projects">Projects</a>
+          <a href="/#about">About</a>
+          <a href="/organization/" aria-current="page">Organization</a>
+          <a href="/after-ai/">The Gorilla Scale</a>
+        </nav>
+      </div>
+    </header>
+
     <div class="wrap">
       <header class="top">
         <h1>Organizations you can inspect</h1>
@@ -2208,6 +2288,45 @@ Expecting `+Ze.join(", ")+", got '"+(this.terminals_[Ne]||Ne)+"'":Dt="Parse erro
         </aside>
       </div>
     </div>
+
+    <footer class="site-foot site-chrome" data-chrome="institute" hidden>
+      <div class="site-foot-inner">
+        <span>Confused Gorilla Institute &middot; Independent research &amp; inquiry &middot; <a href="https://labs.confusedgorilla.com/">Confused Gorilla Labs</a></span>
+        <span class="foot-right">Built with the <a href="https://ogframework.com/">Open Governance Framework</a></span>
+      </div>
+    </footer>
+
+    <footer class="site-foot site-chrome" data-chrome="labs" hidden>
+      <div class="site-foot-inner">
+        <span>Confused Gorilla Labs &middot; Build. Explore. Repeat.</span>
+        <span class="foot-links foot-right">
+          <a href="/#projects">Projects</a>
+          <a href="/organization/">Organization</a>
+          <a href="https://github.com/scottconfusedgorilla">GitHub</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      /* Site chrome: this same file ships on confusedgorilla.com (Institute),
+         labs.confusedgorilla.com (Labs), and as a standalone example anywhere
+         else. Unhide only the header/footer pair matching the hostname; on
+         any other host neither pair is shown and the wordmark image (kept in
+         data-src so it is never requested off-site) is never loaded. */
+      (function () {
+        var host = (window.location.hostname || "").toLowerCase();
+        var which = null;
+        if (host === "confusedgorilla.com" || host === "www.confusedgorilla.com") which = "institute";
+        else if (host === "labs.confusedgorilla.com") which = "labs";
+        if (!which) return;
+        var blocks = document.querySelectorAll('[data-chrome="' + which + '"]');
+        for (var i = 0; i < blocks.length; i++) {
+          var imgs = blocks[i].querySelectorAll("img[data-src]");
+          for (var j = 0; j < imgs.length; j++) imgs[j].src = imgs[j].getAttribute("data-src");
+          blocks[i].hidden = false;
+        }
+      })();
+    </script>
 
     <script>
       "use strict";
