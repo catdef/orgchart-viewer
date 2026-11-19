@@ -27,6 +27,8 @@ It builds a top-down tree from each file's `orgdef:Position` items and `relation
 
 `?org=<slug>` in the URL preselects an organization.
 
+One deployment note: when the page is served on confusedgorilla.com or labs.confusedgorilla.com, it also shows that site's header and footer (selected by hostname) so the page sits inside its home site. On any other host it renders with no site chrome, exactly as an adopter would want.
+
 ## Use it with your own organization
 
 1. Serve this directory from any static host (the page needs http(s) to fetch its JSON).
